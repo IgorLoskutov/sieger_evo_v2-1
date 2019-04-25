@@ -1,1 +1,1 @@
-web:flask db upgrade; gunicorn fileshare:app
+web: flask db upgrade; gunicorn fileshare:app
