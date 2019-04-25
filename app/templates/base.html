@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<style>
+
+.nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #555;
+}
+
+.nav li {
+  float: left;
+}
+
+.nav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.nav li a:hover {
+  background-color: #000;
+}
+
+#Table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#Table th, #Table td {
+  text-align: left;
+  padding: 12px;
+}
+
+#Table tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#Table tr.header, #Table tr:hover {
+  background-color: #f1f1f1;
+}
+</style>
+
+</head>
+<body>
+
+<div id="header">
+  <div id="logo">
+  </div>
+</div>
+<div id="nav" class="nav">
+  <ul>
+    <li><a href="{{url_for('index')}}"> Home</a></li>
+    <li><a href="{{url_for('files')}}"> My Files</a></li>
+    <li>
+      {% if current_user.is_anonymous %}
+        <a href="{{url_for('login')}}">Login</a>
+      {% else %}
+        <a href="{{url_for('logout')}}">Logout</a>
+    {% endif %}
+  </ul>
+</div>
+ <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    {% block content %}{% endblock %}
+</body>
+</html>

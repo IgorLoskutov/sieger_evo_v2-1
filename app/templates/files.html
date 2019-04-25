@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Hello, {{user}}</h1>
+  <p>Here are the files, you've uploaded:</p>
+  <table id="Table">
+    <tr class="header">
+      <th style="width:10%;">ID</th>
+      <th style="width:50%;">Filename</th>
+    </tr>
+  </table>
+
+
+  <button id="refresh" onClick="refresh()">Refresh</button>
+
+  <script>
+  $(refresh());
+
+  function refresh(){
+    var head = $("tr:first-child");
+    var d;
+    $.get('?lines', function(data){
+        console.log(data);
+        $("table").empty();
+        $("table").append(head, data);
+      })
+      .fail(function(){
+        window.location.replace('/404/file');
+      });
+    }
+
+
+    
+    
+    </script>
+{% endblock %}

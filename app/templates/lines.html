@@ -1,0 +1,6 @@
+ {% for file in files %}
+    <tr>
+      <td>{{file.id}}</td>
+      <td><a href="{{ url_for('file', file_id=file.id )}}">{{file.filename}}</a></td>
+    </tr>
+  {% endfor %}
