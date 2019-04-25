@@ -1,3 +1,0 @@
-
-flask db upgrade
-web:python fileshare:app
