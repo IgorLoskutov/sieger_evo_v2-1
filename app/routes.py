@@ -10,6 +10,8 @@ from app.models import Datafiles, Users
 from app.forms import LoginForm, UploadForm
 from app.errors import page_not_found
 
+import pytz
+
 from datetime import datetime, timedelta
 
 from io import BytesIO
@@ -31,11 +33,11 @@ def index():
             user_id=user_id,
             filename=filename,
             datafile=form.datafile.data.read(),
-            expire=datetime.now() + timedelta(minutes=form.availability.data)
+            expire=datetime.now(pytz.utc) + timedelta(minutes=form.availability.data)
             )
         db.session.add(file)
         db.session.commit()
-        Datafiles.last_commit = datetime.now()
+        Datafiles.last_commit = datetime.now(pytz.utc)
 
     return render_template('index.html',form=form)
 
@@ -51,16 +53,18 @@ def files():
         can be comented out from code if insertions are frequent enough
         (i.e. trigger activated frequent enough)
         """
+        if Datafiles.last_commit:
+            print('last commit ',Datafiles.last_commit, 'now: ', datetime.now(pytz.utc))
+            print(datetime.now(pytz.utc)-Datafiles.last_commit)
         if Datafiles.last_commit and\
-            datetime.now()-Datafiles.last_commit > timedelta(minutes=1) :
-            print( datetime.now(), Datafiles.last_commit)
+            datetime.now(pytz.utc)-Datafiles.last_commit > timedelta(minutes=1):
             expired = Datafiles.query.filter(
-                Datafiles.expire<=datetime.now()
+                Datafiles.expire<=datetime.now(pytz.utc)
                 ).all()
             for file in expired:
                 db.session.delete(file)
             db.session.commit()
-            Datafiles.last_commit = datetime.now()
+            Datafiles.last_commit = datetime.now(pytz.utc)
 
     if 'lines' in request.args:
         delete_expired()
