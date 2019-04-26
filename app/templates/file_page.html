@@ -3,7 +3,7 @@
 {% block content %}
 
 <h2>{{file.filename}}</h2>
-<p> this file will expire {{file.expire.strftime("%m/%d/%Y, %H:%M:%S")  utc}} </p>
+<p> this file will expire {{file.expire.strftime("%m/%d/%Y, %H:%M:%S")}}  utc </p>
 <a href="{{ url_for('download', filename=file.filename )}}" download>
     <button class="download-btn">Download</button>
 </a>
