@@ -53,11 +53,11 @@ def files():
         can be comented out from code if insertions are frequent enough
         (i.e. trigger activated frequent enough)
         """
-        if Datafiles.last_commit:
-            print('last commit ',Datafiles.last_commit, 'now: ', datetime.now(pytz.utc))
-            print(datetime.now(pytz.utc)-Datafiles.last_commit)
+        refresh_timout_mins = 1
+
         if Datafiles.last_commit and\
-            datetime.now(pytz.utc)-Datafiles.last_commit > timedelta(minutes=1):
+            datetime.now(pytz.utc)-Datafiles.last_commit \
+                > timedelta(minutes=refresh_timout_mins):
             expired = Datafiles.query.filter(
                 Datafiles.expire<=datetime.now(pytz.utc)
                 ).all()
