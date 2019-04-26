@@ -52,7 +52,8 @@ def files():
         (i.e. trigger activated frequent enough)
         """
         if Datafiles.last_commit and\
-            datetime.now()-Datafiles.last_commit < timedelta(minutes=1) :
+            datetime.now()-Datafiles.last_commit > timedelta(minutes=1) :
+            print( datetime.now(), Datafiles.last_commit)
             expired = Datafiles.query.filter(
                 Datafiles.expire<=datetime.now()
                 ).all()
@@ -64,7 +65,6 @@ def files():
     if 'lines' in request.args:
         delete_expired()
         files=Datafiles.query.filter(Datafiles.user_id==current_user.id).all()
-        print(files)
         if len(files) == 0:
             abort(404)
         return render_template('lines.html', files=files)

@@ -2,3 +2,5 @@ venv/
 _pycache__/
 /_pycache__/
 *.pyc
+*.sql
+requirements_good.txt
