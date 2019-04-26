@@ -9,10 +9,15 @@
   страница 404
 2. Сохранение файлов в персистентное хранилище. 
   - Postgresql. проект содержит миграции alembic
+  
         $ psql postgres
+        
          postgres=# create database fileshare owner <username>;
+         
          postgres=# \q
+         
         $ flask db upgrade
+        
   -  в базу (в миграцию) вставлена процедура удаления старых файлов и триггер
     ON INSERT, её запускающий
   - на случай работы с низкой загрузкой (частота  INSERT'ов мала) в приложении предусмотрена
